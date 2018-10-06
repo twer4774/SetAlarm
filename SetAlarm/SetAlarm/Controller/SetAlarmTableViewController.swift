@@ -22,7 +22,8 @@ class SetAlarmTableViewController: UITableViewController{
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+    
+        print(self.appDelegate.setalarmlist.count)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,11 +44,9 @@ class SetAlarmTableViewController: UITableViewController{
            
         }
         
-        print("switch Is On \(self.swIsOn)")
-        
     }
-    
 
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -57,23 +56,30 @@ class SetAlarmTableViewController: UITableViewController{
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        let count = self.appDelegate.setalarmlist.count
         
-        return 1
+        return count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let row = self.appDelegate.setalarmlist[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SetAlarmCell", for: indexPath) as! SetAlarmCell
+//        print(row.title!)
         
+        cell.lbSetAlarmName?.text = row.title
         cell.swSet.isOn = swIsOn
         
         // Configure the cell...
-
+        
         return cell
     }
     
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+        let row = self.appDelegate.setalarmlist[indexPath.row]
+        
+        
     }
     /*
     // Override to support conditional editing of the table view.
@@ -105,10 +111,16 @@ class SetAlarmTableViewController: UITableViewController{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-       
-        let alarmVC = segue.destination as! AlarmsTableViewController
-        alarmVC.swIsOn = swIsOn
-        print("prepare \(alarmVC.swIsOn)")
+        
+        switch segue.identifier{
+        case Id.addSetAlarmIdentifier:
+            let addSet = segue.destination as! AddSetAlarmViewController
+        default:
+            let alarmVC = segue.destination as! AlarmsTableViewController
+            alarmVC.swIsOn = swIsOn
+        }
+        
+        
         
     }
     

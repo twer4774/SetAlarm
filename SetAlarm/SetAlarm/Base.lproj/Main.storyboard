@@ -68,12 +68,59 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="묶음 알람" id="4eg-va-Ojd">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="9sx-gv-McG"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="c1x-R4-ezu"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="2x7-6L-RfH">
+                            <connections>
+                                <segue destination="vQw-by-q1C" kind="show" identifier="AddSetAlarmSegue" id="gKD-kG-gKs"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ur6-f5-s9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="472.80000000000001" y="106.59670164917542"/>
+        </scene>
+        <!--묶음 알람 추가-->
+        <scene sceneID="mDH-LA-5gP">
+            <objects>
+                <viewController storyboardIdentifier="AddSetAlarm" title="묶음 알람 추가" id="vQw-by-q1C" customClass="AddSetAlarmViewController" customModule="SetAlarm" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Smy-c3-MmW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jXd-G2-26M">
+                                <rect key="frame" x="286" y="207" width="44" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="저장"/>
+                                <connections>
+                                    <action selector="addAction:" destination="vQw-by-q1C" eventType="touchUpInside" id="fEd-EG-Kj9"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="알람이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qx6-pm-hs2">
+                                <rect key="frame" x="60" y="162" width="123" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Pg-G0-rrm">
+                                <rect key="frame" x="60" y="211" width="209" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="G9n-Zf-cf8"/>
+                    </view>
+                    <connections>
+                        <outlet property="addTextField" destination="7Pg-G0-rrm" id="2is-rX-ZZK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="anh-oT-lnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="472.80000000000001" y="760.56971514242889"/>
         </scene>
         <!--AddAlarm-->
         <scene sceneID="3dc-2e-xkO">

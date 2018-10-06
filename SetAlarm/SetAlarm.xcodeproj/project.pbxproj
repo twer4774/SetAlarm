@@ -16,6 +16,8 @@
 		47FA9C63216643490056B8CE /* AlarmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C62216643490056B8CE /* AlarmModel.swift */; };
 		47FA9C65216643AB0056B8CE /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C64216643AB0056B8CE /* AlarmCell.swift */; };
 		47FA9C6A216703040056B8CE /* SetAlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C69216703040056B8CE /* SetAlarmCell.swift */; };
+		47FA9CE72168F49D0056B8CE /* AddSetAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9CE62168F49D0056B8CE /* AddSetAlarmViewController.swift */; };
+		47FA9CEA2168FB740056B8CE /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9CE92168FB740056B8CE /* Identifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		47FA9C62216643490056B8CE /* AlarmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmModel.swift; sourceTree = "<group>"; };
 		47FA9C64216643AB0056B8CE /* AlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
 		47FA9C69216703040056B8CE /* SetAlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmCell.swift; sourceTree = "<group>"; };
+		47FA9CE62168F49D0056B8CE /* AddSetAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetAlarmViewController.swift; sourceTree = "<group>"; };
+		47FA9CE92168FB740056B8CE /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,7 @@
 		476C01E72161C76E00A079ED /* SetAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				47FA9CE82168FB3C0056B8CE /* Helper */,
 				47FA9C6621664B1F0056B8CE /* Protocol */,
 				47FA9C5D21663E240056B8CE /* Controller */,
 				47FA9C5C21663E150056B8CE /* Model */,
@@ -89,6 +94,7 @@
 			children = (
 				47FA9C5E21663E470056B8CE /* SetAlarmTableViewController.swift */,
 				47FA9C602166419B0056B8CE /* AlarmsTableViewController.swift */,
+				47FA9CE62168F49D0056B8CE /* AddSetAlarmViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -98,6 +104,14 @@
 			children = (
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		47FA9CE82168FB3C0056B8CE /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				47FA9CE92168FB740056B8CE /* Identifier.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,9 +187,11 @@
 			files = (
 				47FA9C65216643AB0056B8CE /* AlarmCell.swift in Sources */,
 				47FA9C5F21663E470056B8CE /* SetAlarmTableViewController.swift in Sources */,
+				47FA9CE72168F49D0056B8CE /* AddSetAlarmViewController.swift in Sources */,
 				47FA9C6A216703040056B8CE /* SetAlarmCell.swift in Sources */,
 				47FA9C63216643490056B8CE /* AlarmModel.swift in Sources */,
 				47FA9C612166419B0056B8CE /* AlarmsTableViewController.swift in Sources */,
+				47FA9CEA2168FB740056B8CE /* Identifier.swift in Sources */,
 				476C01E92161C76E00A079ED /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

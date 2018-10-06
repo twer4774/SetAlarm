@@ -11,5 +11,4 @@ import UIKit
 class SetAlarmCell: UITableViewCell{
     @IBOutlet var lbSetAlarmName: UILabel!
     @IBOutlet var swSet: UISwitch!
-    
 }
