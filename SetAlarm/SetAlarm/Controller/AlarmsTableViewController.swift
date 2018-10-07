@@ -11,8 +11,8 @@ import UIKit
 class AlarmsTableViewController: UITableViewController{
     
     var swIsOn = false
-    
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var alarmname = ""
     override func viewDidLoad() {
         super.viewDidLoad()
   
@@ -21,7 +21,7 @@ class AlarmsTableViewController: UITableViewController{
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-       
+       print("알람 이름\(alarmname)")
     }
 
 
@@ -39,9 +39,19 @@ class AlarmsTableViewController: UITableViewController{
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let ud = UserDefaults.standard
+//        let row = appDelegate.alarmslist[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as! AlarmCell
         print("alarmtable: \(swIsOn)")
        
+        cell.btnSwitch.isOn = swIsOn
+        
+        if ud.string(forKey: "sw\(alarmname)") == "0"{
+            swIsOn = false
+        } else {
+            swIsOn = true
+        }
         cell.btnSwitch.isOn = swIsOn
 
         // Configure the cell...

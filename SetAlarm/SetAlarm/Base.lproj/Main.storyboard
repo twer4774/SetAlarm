@@ -56,7 +56,6 @@
                                 <connections>
                                     <outlet property="lbSetAlarmName" destination="eIw-aA-VUL" id="T27-sS-pjj"/>
                                     <outlet property="swSet" destination="9Kg-zc-g3P" id="b0W-AS-eiv"/>
-                                    <segue destination="KXC-GT-bVw" kind="show" id="gWJ-R2-NV8"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -74,6 +73,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="KXC-GT-bVw" kind="show" id="bea-gI-Ftz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ur6-f5-s9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

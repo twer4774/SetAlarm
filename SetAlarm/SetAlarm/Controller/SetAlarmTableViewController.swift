@@ -13,7 +13,7 @@ class SetAlarmTableViewController: UITableViewController{
    
     var swIsOn = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
+    var alarmname = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,10 +64,10 @@ class SetAlarmTableViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = self.appDelegate.setalarmlist[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SetAlarmCell", for: indexPath) as! SetAlarmCell
-//        print(row.title!)
         
         cell.lbSetAlarmName?.text = row.title
-        cell.swSet.isOn = swIsOn
+        cell.swSet.isOn = row.swIs
+        
         
         // Configure the cell...
         
@@ -77,7 +77,27 @@ class SetAlarmTableViewController: UITableViewController{
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+        let ud = UserDefaults.standard
         let row = self.appDelegate.setalarmlist[indexPath.row]
+        
+        //셀을 누르면 setalarmlist에 alarmIdx, title, swIs 값 저장
+        row.alarmIdx = indexPath.row
+        print("Index: \(row.alarmIdx)")
+        alarmname = row.title!
+        ud.set(swIsOn, forKey: "sw\(alarmname)")
+        row.swIs = swIsOn
+        print("sw: \(row.swIs)")
+        
+        //Userdefaults로 스위치 값을 sw알람이름 으로 저장
+        print(ud.string(forKey: "sw\(alarmname)"))
+        
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "Alarms") as? AlarmsTableViewController else{
+            return
+        }
+        //이 방법으로 값을 넘기면 userdefault를 안써도 되지 않을까? 알람 추가를 만든 뒤 생각하기
+//        vc.swIsOn = swIsOn
+        vc.alarmname = alarmname
+        self.navigationController?.pushViewController(vc, animated: true)
         
         
     }
@@ -116,8 +136,9 @@ class SetAlarmTableViewController: UITableViewController{
         case Id.addSetAlarmIdentifier:
             let addSet = segue.destination as! AddSetAlarmViewController
         default:
-            let alarmVC = segue.destination as! AlarmsTableViewController
-            alarmVC.swIsOn = swIsOn
+//            let alarmVC = segue.destination as! AlarmsTableViewController
+//            alarmVC.alarmname = alarmname
+            break
         }
         
         
