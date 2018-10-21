@@ -10,10 +10,15 @@ import UIKit
 
 
 class SetAlarmTableViewController: UITableViewController{
-   
-    var swIsOn = true
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var setIdx = 0
     var alarmname = ""
+    var swIsOn = true
+    
+    let ud = UserDefaults.standard
+    
+    var setalarmlist = [[AlarmSetModel]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,11 +27,23 @@ class SetAlarmTableViewController: UITableViewController{
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    
-        print(self.appDelegate.setalarmlist.count)
+        
+        
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if let data = ud.data(forKey: "setlist"){
+            let list = NSKeyedUnarchiver.unarchiveObject(with: data) as? [[AlarmSetModel]]
+            
+            self.setalarmlist = list!
+        }
+        
+        print("SetAalrm 갯수: \(self.setalarmlist.count)")
+        
         self.tableView.reloadData()
     }
     
@@ -55,50 +72,50 @@ class SetAlarmTableViewController: UITableViewController{
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        let count = self.appDelegate.setalarmlist.count
-        
+
+        let count = self.setalarmlist.count
         return count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = self.appDelegate.setalarmlist[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SetAlarmCell", for: indexPath) as! SetAlarmCell
         
-        cell.lbSetAlarmName?.text = row.title
-        cell.swSet.isOn = row.swIs
+        let row = self.setalarmlist[indexPath.row]
         
+        cell.lbSetAlarmName.text = row[0].title
         
-        // Configure the cell...
         
         return cell
     }
     
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        let ud = UserDefaults.standard
-        let row = self.appDelegate.setalarmlist[indexPath.row]
+        print("setAlarmDidselect \(indexPath.row)")
+
         
-        //셀을 누르면 setalarmlist에 alarmIdx, title, swIs 값 저장
-        row.alarmIdx = indexPath.row
-        print("Index: \(row.alarmIdx)")
-        alarmname = row.title!
-        ud.set(swIsOn, forKey: "sw\(alarmname)")
-        row.swIs = swIsOn
-        print("sw: \(row.swIs)")
+        setIdx = indexPath.row
+        
+        
+        alarmname = self.setalarmlist[indexPath.row][0].title!
+        
+        
+        
+/* 이 코드도 실행은 됨. storyboardID를 가지고 전달하기
+        let vc = storyboard?.instantiateViewController(withIdentifier: "Alarms") as! AlarmsTableViewController
+        vc.start = self.start
+        vc.alarmname = self.alarmname
+        vc.setIdx = self.setIdx
+        self.navigationController?.pushViewController(vc, animated: true)
+
+*/
+        
+        //prepare 동작 시키는 코드
+        self.performSegue(withIdentifier: "AlarmsSegue", sender: self)
         
         //Userdefaults로 스위치 값을 sw알람이름 으로 저장
-        print(ud.string(forKey: "sw\(alarmname)"))
+//        print(ud.string(forKey: "sw\(alarmname)"))
         
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "Alarms") as? AlarmsTableViewController else{
-            return
-        }
-        //이 방법으로 값을 넘기면 userdefault를 안써도 되지 않을까? 알람 추가를 만든 뒤 생각하기
-//        vc.swIsOn = swIsOn
-        vc.alarmname = alarmname
-        self.navigationController?.pushViewController(vc, animated: true)
-        
+      
         
     }
     /*
@@ -109,19 +126,23 @@ class SetAlarmTableViewController: UITableViewController{
     }
     */
 
-    /*
+    //아이템 삭제
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            self.setalarmlist.remove(at: indexPath.row)
+            let encoded = NSKeyedArchiver.archivedData(withRootObject: self.setalarmlist)
+            
+            ud.set(encoded , forKey: "setlist")
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
-   
+
    
  
     
@@ -131,19 +152,43 @@ class SetAlarmTableViewController: UITableViewController{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        
-        switch segue.identifier{
-        case Id.addSetAlarmIdentifier:
-            let addSet = segue.destination as! AddSetAlarmViewController
-        default:
+//        switch segue.identifier{
+//        case Id.addSetAlarmIdentifier:
+//            let addSet = segue.destination as! AddSetAlarmViewController
+//        default:
 //            let alarmVC = segue.destination as! AlarmsTableViewController
 //            alarmVC.alarmname = alarmname
+//            alarmVC.setIdx = self.setIdx
+//        }
+
+        let dest = segue.destination
+        switch segue.identifier{
+        case Id.addAlarmIdentifier:
+            guard let vc = dest as? AddSetAlarmViewController else {
+                return
+            }
+            
+        case Id.alarmsIdentifier:
+            guard let vc = dest as? AlarmsTableViewController else {
+                return
+            }
+            vc.alarmname = self.alarmname
+            vc.setIdx = setIdx
+        default:
             break
         }
-        
-        
-        
+        /*
+        let dest = segue.destination
+        guard let vc = dest as? AlarmsTableViewController else {
+            return
+        }
+
+        vc.start = self.start
+        vc.alarmname = self.alarmname
+        vc.setIdx = self.setIdx
+    */
     }
+ 
     
 
 }

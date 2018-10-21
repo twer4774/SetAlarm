@@ -8,8 +8,13 @@
 
 import Foundation
 
+//prepare할때 쓰임
 struct Id{
     static let addSetAlarmIdentifier = "AddSetAlarmSegue"
-    static let editSetAlarmIdentifer = "EditSetAlarmSegue"
+    static let editSetAlarmIdentifier = "EditSetAlarmSegue"
     
+    static let alarmsIdentifier = "AlarmsSegue"
+    
+    static let addAlarmIdentifier = "AddAalrmSegue"
+    static let editAlarmIdentifier = "EditAlarmSegue"
 }

@@ -10,9 +10,15 @@ import UIKit
 
 class AlarmsTableViewController: UITableViewController{
     
-    var swIsOn = false
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var swIsOn = true
     var alarmname = ""
+    
+    var setIdx = 0 //세트 인덱스
+    
+    let ud = UserDefaults.standard
+    
+    var setalarmlist = [[AlarmSetModel]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
   
@@ -21,9 +27,27 @@ class AlarmsTableViewController: UITableViewController{
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-       print("알람 이름\(alarmname)")
+        print("세트 인덱스 \(setIdx)")
+        
+        navigationItem.title = alarmname
+        
+       
+        
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let data = ud.data(forKey: "setlist"){
+            let list = NSKeyedUnarchiver.unarchiveObject(with: data) as? [[AlarmSetModel]]
+            
+            self.setalarmlist = list!
+               
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    
 
     // MARK: - Table view data source
 
@@ -34,17 +58,23 @@ class AlarmsTableViewController: UITableViewController{
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        let count = self.setalarmlist[setIdx][0].setAlarms?.count
+        return count!
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ud = UserDefaults.standard
-//        let row = appDelegate.alarmslist[indexPath.row]
+        
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as! AlarmCell
-        print("alarmtable: \(swIsOn)")
-       
+        
+        if let row = self.setalarmlist[setIdx][0].setAlarms?[indexPath.row]{
+            cell.mainTime.text = row.mainTime
+            cell.ampm.text = row.ampm
+            
+        }
+        
+        
         cell.btnSwitch.isOn = swIsOn
         
         if ud.string(forKey: "sw\(alarmname)") == "0"{
@@ -52,8 +82,8 @@ class AlarmsTableViewController: UITableViewController{
         } else {
             swIsOn = true
         }
-        cell.btnSwitch.isOn = swIsOn
-
+//        cell.btnSwitch.isOn = swIsOn
+        
         // Configure the cell...
 
         return cell
@@ -98,19 +128,40 @@ class AlarmsTableViewController: UITableViewController{
 
     
     
-    
-    /*
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let addEditController = segue.destination as! AddEditAlarmViewController
+        if segue.identifier == "AddAlarmSegue"{
+            addEditController.mode = "추가"
+            addEditController.alarmname = self.alarmname
+            addEditController.setIdx = self.setIdx
+            
+        } else if segue.identifier == "EditAlarmSegue" {
+            addEditController.mode = "수정"
+            addEditController.alarmname = self.alarmname
+            addEditController.setIdx = self.setIdx
+        }
+    }
+   /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        
-        let setAlarmViewController = segue.destination as! SetAlarmTableViewController
-        //SetAlarm -> Alarms
-//        setAlarmViewController.delegate = self
-        setAlarmViewController.swIsOn = swIsOn
+        let dist = segue.destination as! UINavigationController
+        let addEditController = dist.topViewController as! AddEditAlarmViewController
+        switch segue.identifier{
+        case Id.addAlarmIdentifier:
+            addEditController.navigationItem.title = "알람 추가"
+            addEditController.segueInfo = SegueInfo(curCellindex: alarmsModel.count, isEditMode: false, weekday: [], mediaLabel: "사운드", mediaID: "")
+        case Id.editAlarmIdentifier:
+            addEditController.navigationItem.title = "알람 수정"
+            addEditController.segueInfo = SegueInfo(curCellindex: alarmsModel.count, isEditMode: true, weekday: [], mediaLabel: "사운드", mediaID: "")
+            addEditController.segueInfo = sender as! SegueInfo
+        default:
+            break
+        }
         
     }
     */
