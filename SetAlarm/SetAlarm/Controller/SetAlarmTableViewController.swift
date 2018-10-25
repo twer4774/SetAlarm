@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import UserNotifications
 
 
 class SetAlarmTableViewController: UITableViewController{
     
     var setIdx = 0
     var alarmname = ""
-    var swIsOn = true
+    var swIsOn = false
     
     let ud = UserDefaults.standard
     
@@ -29,7 +30,7 @@ class SetAlarmTableViewController: UITableViewController{
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
+//        self.navigationItem.leftBarButtonItem = self.editButtonItem
         
         
         
@@ -47,21 +48,6 @@ class SetAlarmTableViewController: UITableViewController{
         self.tableView.reloadData()
     }
     
-  
-   
-    //IBAction
-    @IBAction func chageSwitch(_ sender: UISwitch) {
-        if sender.isOn{
-            swIsOn = true
-            print("on")
-           
-        } else {
-            swIsOn = false
-            print("off")
-           
-        }
-        
-    }
 
     
     // MARK: - Table view data source
@@ -78,17 +64,113 @@ class SetAlarmTableViewController: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SetAlarmCell", for: indexPath) as! SetAlarmCell
-        
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "SetAlarmCell", for: indexPath) as! SetAlarmCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SetAlarmCell") as! UITableViewCell
         let row = self.setalarmlist[indexPath.row]
         
-        cell.lbSetAlarmName.text = row[0].title
+
+        cell.textLabel?.font = UIFont.init(name:"Helvetica", size: 30)
+        cell.textLabel?.text = row[0].title
+       
+        var btnSwitch = UISwitch()
+        btnSwitch.isOn = row[0].swIs!
+        btnSwitch.tag = indexPath.row
+        btnSwitch.setOn(true, animated: false)
+        btnSwitch.addTarget(self, action: #selector(switchChangedValue(sender: )), for: .valueChanged)
+        cell.accessoryView = btnSwitch
+        
         
         
         return cell
     }
     
+    @objc func switchChangedValue(sender: UISwitch!){
+        if sender.isOn{
+            swIsOn = true
+            print("on")
+            print(sender.tag)
+            localNotification(index: sender.tag)
+        } else {
+            swIsOn = false
+            print("off")
+            //알람 제거
+//        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            
+            offLocoalNotification(index: sender.tag)
+        }
+    }
+    func localNotification(index: Int){
+        
+        //push 알람 객체 생성
+        let center = UNUserNotificationCenter.current()
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        //알람 등록
+        center.requestAuthorization(options: options) { (didAllow, error) in
+            
+        }
+        
+        let localContent = UNMutableNotificationContent()
+        let setalarm = self.setalarmlist[index][0]
+        localContent.title = setalarm.title!
+        localContent.sound = UNNotificationSound(named: "bell.mp3")
+ 
+        //발송 조건 정의
+        let alarmcount = self.setalarmlist[index][0].setAlarms?.count as! Int
+        print("알람갯수: \(alarmcount)")
+        for i in 0 ..< alarmcount{
 
+            if let str = self.setalarmlist[index][0].setAlarms?[i]{
+                let strTime = str.mainTime?.components(separatedBy: ":")
+                let strAP = str.ampm
+                print("ampm\(strAP)")
+
+                var newDate = DateComponents()
+                if strAP == "오후"{
+                    newDate.hour = Int((strTime?[0])!)! + 12
+                    print(newDate.hour)
+                } else {
+                    newDate.hour = Int((strTime?[0])!)
+                    print(newDate.hour)
+                }
+                
+                newDate.minute = Int((strTime?[1])!)
+                print(newDate.minute)
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: newDate, repeats: true)
+                localContent.body = "\(self.setalarmlist[index][0].setAlarms?[i].mainTime as! String) 알람"
+                let request = UNNotificationRequest(identifier: "\(self.setalarmlist[index][0].setAlarms?[i].mainTime)", content: localContent, trigger: trigger)
+                
+                //노티피케이션 센터에 추가
+                UNUserNotificationCenter.current().add(request){
+                    (_) in
+                }
+            }
+        }
+    }
+    
+    //알람 끄기
+    func offLocoalNotification(index: Int){
+        let alarmcount = self.setalarmlist[index][0].setAlarms?.count as! Int
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
+            var identifiers: [String] = []
+            for notification:UNNotificationRequest in notificationRequests{
+                for i in 0 ..< alarmcount{
+                    if notification.identifier == "\(self.setalarmlist[index][0].setAlarms?[i].mainTime)"{
+                        identifiers.append(notification.identifier)
+                    }
+                }
+            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("setAlarmDidselect \(indexPath.row)")
 
@@ -97,7 +179,10 @@ class SetAlarmTableViewController: UITableViewController{
         
         
         alarmname = self.setalarmlist[indexPath.row][0].title!
-        
+        self.setalarmlist[indexPath.row][0].swIs = self.swIsOn
+        let encode = NSKeyedArchiver.archivedData(withRootObject: self.setalarmlist)
+        ud.set(encode, forKey:"setlist")
+        print("switch \(swIsOn)")
         
         
 /* 이 코드도 실행은 됨. storyboardID를 가지고 전달하기
@@ -142,7 +227,10 @@ class SetAlarmTableViewController: UITableViewController{
     }
     
 
-
+    //Delete를 한글로 변경
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "삭제"
+    }
    
  
     
@@ -174,6 +262,7 @@ class SetAlarmTableViewController: UITableViewController{
             }
             vc.alarmname = self.alarmname
             vc.setIdx = setIdx
+            
         default:
             break
         }

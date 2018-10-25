@@ -16,6 +16,7 @@ class AddSetAlarmViewController: UIViewController, UITextFieldDelegate {
     
     var setIdx = 0
     
+    
     var setalarmlist = [[AlarmSetModel]]()
     
     override func viewDidLoad() {
@@ -62,7 +63,7 @@ class AddSetAlarmViewController: UIViewController, UITextFieldDelegate {
          */
         
         
-        let data = [AlarmSetModel(title: addTextField!.text!, setIdx: setIdx, swIs: true, setAlarms: [])]
+        let data = [AlarmSetModel(title: addTextField!.text!, setIdx: setIdx, swIs: false, setAlarms: [])]
         self.setalarmlist.append(data)
         
         

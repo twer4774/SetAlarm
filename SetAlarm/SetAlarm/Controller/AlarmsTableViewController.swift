@@ -19,6 +19,7 @@ class AlarmsTableViewController: UITableViewController{
     
     var setalarmlist = [[AlarmSetModel]]()
     
+    @IBOutlet var btnAdd: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
   
@@ -31,6 +32,9 @@ class AlarmsTableViewController: UITableViewController{
         
         navigationItem.title = alarmname
         
+       tableView.allowsSelectionDuringEditing = true
+        
+        print("넘어온 스위치 값은?\(swIsOn)")
        
         
     }
@@ -43,6 +47,8 @@ class AlarmsTableViewController: UITableViewController{
             self.setalarmlist = list!
                
         }
+        
+        
         
         self.tableView.reloadData()
     }
@@ -74,8 +80,8 @@ class AlarmsTableViewController: UITableViewController{
             
         }
         
-        
-        cell.btnSwitch.isOn = swIsOn
+        print("뭔데 하나만 되냐? \(swIsOn)")
+        cell.btnSwitch.isOn = self.setalarmlist[setIdx][0].swIs!
         
         if ud.string(forKey: "sw\(alarmname)") == "0"{
             swIsOn = false
@@ -89,7 +95,28 @@ class AlarmsTableViewController: UITableViewController{
         return cell
     }
     
-
+    @IBAction func btnModify(_ sender: UIBarButtonItem) {
+        self.tableView.isEditing = true
+        self.btnAdd.title = "완료"
+        
+    }
+   
+    @IBAction func btnAdd(_ sender: UIBarButtonItem) {
+        if self.tableView.isEditing == true{
+            self.tableView.isEditing = false
+            self.btnAdd.title = "추가"
+        } else {
+            self.performSegue(withIdentifier: "AddAlarmSegue", sender: self)
+        }
+    }
+    
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isEditing{
+            
+        }
+    }
     
     /*
     // Override to support conditional editing of the table view.
@@ -99,18 +126,26 @@ class AlarmsTableViewController: UITableViewController{
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            self.setalarmlist[setIdx][0].setAlarms?.remove(at: indexPath.row)
+            let encoded = NSKeyedArchiver.archivedData(withRootObject: self.setalarmlist)
+            
+            ud.set(encoded , forKey: "setlist")
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
-
+    
+    //Delete를 한글로 변경
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "삭제"
+    }
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -141,6 +176,17 @@ class AlarmsTableViewController: UITableViewController{
             addEditController.alarmname = self.alarmname
             addEditController.setIdx = self.setIdx
         }
+        
+        //참고코드
+        /*
+        if segue.identifier == "sgDetail"{
+            let cell = sender as! UITableViewCell
+            let indexPath = self.tvListView.indexPath(for: cell)
+            let detailView = segue.destination as! DetailViewController
+            detailView.receiveItem(items[(indexPath?.row)!])
+            
+        }
+    */
     }
    /*
     // MARK: - Navigation

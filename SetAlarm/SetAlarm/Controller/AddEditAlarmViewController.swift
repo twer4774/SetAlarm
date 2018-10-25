@@ -107,8 +107,15 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
         print("이거가 빈값?? \(self.setalarmlist[setIdx][0])") //이거가 빈값이라고??
         self.setalarmlist[setIdx][0].setAlarms?.append(data)
         
+        
         print("data \(data)")
-        print("setalarmlist \(self.setalarmlist[setIdx][0])")
+        print("setalarmlist \(self.setalarmlist[setIdx][0].setAlarms)")
+        
+//        self.setalarmlist[setIdx][0].setAlarms?.sorted(by: { (a,b) -> Bool in
+//            if a.ampm == "오후"{
+//                print(Int(a.mainTime) + 12)
+//            }
+//        })
         
       
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.setalarmlist)
@@ -143,6 +150,7 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
             case 0:
                 cell.textLabel?.text = "사운드"
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                
             case 1:
                 cell.textLabel?.text = "알람이름"
                 cell.accessoryType = .disclosureIndicator
