@@ -217,19 +217,13 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Waf-TH-nIZ">
-                                            <rect key="frame" x="310" y="12" width="51" height="31"/>
-                                        </switch>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="vtn-xM-hc8" firstAttribute="leading" secondItem="UqL-Do-uAn" secondAttribute="trailing" constant="5" id="194-cy-TzJ"/>
-                                        <constraint firstItem="Waf-TH-nIZ" firstAttribute="top" secondItem="sj7-OD-y31" secondAttribute="topMargin" constant="1" id="5eK-XW-HqT"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="vtn-xM-hc8" secondAttribute="bottom" constant="5" id="8tF-Tu-g80"/>
                                         <constraint firstItem="UqL-Do-uAn" firstAttribute="top" secondItem="sj7-OD-y31" secondAttribute="topMargin" constant="10" id="BBR-7C-jkt"/>
-                                        <constraint firstItem="Waf-TH-nIZ" firstAttribute="leading" secondItem="vtn-xM-hc8" secondAttribute="trailing" constant="123" id="DNb-BL-NR5"/>
                                         <constraint firstItem="vtn-xM-hc8" firstAttribute="top" secondItem="sj7-OD-y31" secondAttribute="topMargin" id="Dog-8V-zx8"/>
                                         <constraint firstItem="vtn-xM-hc8" firstAttribute="leading" secondItem="UqL-Do-uAn" secondAttribute="trailing" constant="5" id="FeS-Bn-Ug1"/>
-                                        <constraint firstItem="Waf-TH-nIZ" firstAttribute="leading" secondItem="vtn-xM-hc8" secondAttribute="trailing" constant="123" id="HTT-ew-TMM"/>
                                         <constraint firstItem="vtn-xM-hc8" firstAttribute="top" secondItem="sj7-OD-y31" secondAttribute="topMargin" id="NaI-Fw-fTx"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="vtn-xM-hc8" secondAttribute="bottom" constant="5" id="SOW-V3-BVc"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="UqL-Do-uAn" secondAttribute="bottom" constant="5" id="TlQ-8N-yGs"/>
@@ -238,14 +232,11 @@
                                         <constraint firstItem="UqL-Do-uAn" firstAttribute="leading" secondItem="sj7-OD-y31" secondAttribute="leadingMargin" id="bxc-Ru-YQL"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="UqL-Do-uAn" secondAttribute="bottom" constant="5" id="lfQ-tr-eMr"/>
                                         <constraint firstItem="vtn-xM-hc8" firstAttribute="leading" secondItem="UqL-Do-uAn" secondAttribute="trailing" constant="5" id="qkq-37-XqD"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Waf-TH-nIZ" secondAttribute="bottom" constant="6" id="s8N-Mi-GgT"/>
-                                        <constraint firstItem="Waf-TH-nIZ" firstAttribute="leading" secondItem="vtn-xM-hc8" secondAttribute="trailing" constant="123" id="tFv-N7-321"/>
                                         <constraint firstItem="UqL-Do-uAn" firstAttribute="leading" secondItem="sj7-OD-y31" secondAttribute="leadingMargin" id="zfx-Vj-MS5"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="ampm" destination="UqL-Do-uAn" id="Lfg-dP-oc1"/>
-                                    <outlet property="btnSwitch" destination="Waf-TH-nIZ" id="YbS-Tg-H7g"/>
                                     <outlet property="mainTime" destination="vtn-xM-hc8" id="TJi-Pl-6F7"/>
                                 </connections>
                             </tableViewCell>

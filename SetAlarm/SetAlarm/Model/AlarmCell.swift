@@ -12,9 +12,6 @@ class AlarmCell: UITableViewCell {
 
     @IBOutlet var ampm: UILabel!
     @IBOutlet var mainTime: UILabel!
-    @IBOutlet var btnSwitch: UISwitch!
-    
-    
     
 }
 

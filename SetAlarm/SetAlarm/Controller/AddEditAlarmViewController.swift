@@ -68,48 +68,11 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
    
     
     @IBAction func btnSave(_ sender: UIBarButtonItem) {
-
-        /*
-        var data = AlarmsModel()
-        
-//        data.setIdx = setIdx
-//        data.alarmName = alarmname
-        data.mainTime = timeSelect
-        data.ampm = ampm
-        
-        //초기리스트가 빈값이라면 [data]로 넣어 추가하고, 빈 값이 아니라면 [setIdx]에 append한다.
-        
-        if start == 0 {
-//        if appdelegate.alarms2dlist.isEmpty{
-//            appdelegate.alarms2dlist.append([data])
-            appdelegate.alarms2dlist[setIdx][0] = data
-           
-            
-            start = 1
-        } else {
-            appdelegate.alarms2dlist[setIdx].append(data)
-        }
-
-//        if start == 0{
-//            appdelegate.alarms2dlist[setIdx][0] = data
-//        } else {
-//            appdelegate.alarms2dlist[setIdx].append(data)
-//        }
-        print("add된 알람들 \(appdelegate.alarms2dlist)")
-        print("ADD [0] \(appdelegate.alarms2dlist[0])")
-        print("start: \(start)")
-       
-      
-        */
         
         //알람 저장
         var data = AlarmsModel(mainTime: self.timeSelect, ampm: self.ampm)
-        print("이거가 빈값?? \(self.setalarmlist[setIdx][0])") //이거가 빈값이라고??
         self.setalarmlist[setIdx][0].setAlarms?.append(data)
         
-        
-        print("data \(data)")
-        print("setalarmlist \(self.setalarmlist[setIdx][0].setAlarms)")
         
 //        self.setalarmlist[setIdx][0].setAlarms?.sorted(by: { (a,b) -> Bool in
 //            if a.ampm == "오후"{
@@ -117,16 +80,38 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
 //            }
 //        })
         
-      
+//        sortAlarm(alarms: self.setalarmlist[setIdx][0].setAlarms!)
+        
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.setalarmlist)
         print("encodedData \(encodedData)")
         ud.set(encodedData, forKey: "setlist")
         
-//       navigationController?.pushViewController(vc, animated: true)
- 
+        if self.setalarmlist[setIdx][0].swIs == true{
+            let setalarm = SetAlarmTableViewController()
+            setalarm.setalarmlist = self.setalarmlist
+            setalarm.localNotification(index: setIdx)
+            
+        }
         self.navigationController?.popViewController(animated: true)
     }
- 
+ /*
+    //정렬
+    func sortAlarm(alarms: [AlarmsModel]){
+        var sortedAlarm = [AlarmsModel]()
+        for str in alarms{
+            let strTime = str.mainTime?.components(separatedBy: ":")
+            let strAP = str.ampm
+            print("ampm\(strAP)")
+            
+            if strAP == "오후"{
+                strTime[0]
+            }
+            
+
+        }
+        self.setalarmlist[setIdx][0].setAlarms = sortedAlarm
+    }
+ */
  
     func numberOfSections(in tableView: UITableView) -> Int {
         if mode == "추가"{

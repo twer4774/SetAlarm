@@ -80,14 +80,6 @@ class AlarmsTableViewController: UITableViewController{
             
         }
         
-        print("뭔데 하나만 되냐? \(swIsOn)")
-        cell.btnSwitch.isOn = self.setalarmlist[setIdx][0].swIs!
-        
-        if ud.string(forKey: "sw\(alarmname)") == "0"{
-            swIsOn = false
-        } else {
-            swIsOn = true
-        }
 //        cell.btnSwitch.isOn = swIsOn
         
         // Configure the cell...
@@ -116,6 +108,7 @@ class AlarmsTableViewController: UITableViewController{
         if isEditing{
             
         }
+        
     }
     
     /*

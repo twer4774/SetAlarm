@@ -75,7 +75,7 @@ class SetAlarmTableViewController: UITableViewController{
         var btnSwitch = UISwitch()
         btnSwitch.isOn = row[0].swIs!
         btnSwitch.tag = indexPath.row
-        btnSwitch.setOn(true, animated: false)
+//        btnSwitch.setOn(true, animated: false)
         btnSwitch.addTarget(self, action: #selector(switchChangedValue(sender: )), for: .valueChanged)
         cell.accessoryView = btnSwitch
         
@@ -83,13 +83,19 @@ class SetAlarmTableViewController: UITableViewController{
         
         return cell
     }
-    
+    func saveSwitchStatus(index: Int){
+        self.setalarmlist[index][0].swIs = self.swIsOn
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.setalarmlist)
+        print("encodedData \(encodedData)")
+        ud.set(encodedData, forKey: "setlist")
+    }
     @objc func switchChangedValue(sender: UISwitch!){
         if sender.isOn{
             swIsOn = true
             print("on")
             print(sender.tag)
             localNotification(index: sender.tag)
+//            saveSwitchStatus(index: sender.tag)
         } else {
             swIsOn = false
             print("off")
@@ -97,7 +103,10 @@ class SetAlarmTableViewController: UITableViewController{
 //        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             
             offLocoalNotification(index: sender.tag)
+//            saveSwitchStatus(index: sender.tag)
         }
+        saveSwitchStatus(index: sender.tag)
+       
     }
     func localNotification(index: Int){
         
@@ -175,7 +184,7 @@ class SetAlarmTableViewController: UITableViewController{
         print("setAlarmDidselect \(indexPath.row)")
 
         
-        setIdx = indexPath.row
+        self.setIdx = indexPath.row
         
         
         alarmname = self.setalarmlist[indexPath.row][0].title!
@@ -262,7 +271,7 @@ class SetAlarmTableViewController: UITableViewController{
             }
             vc.alarmname = self.alarmname
             vc.setIdx = setIdx
-            
+            vc.swIsOn = swIsOn
         default:
             break
         }
