@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -23,6 +24,13 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
     
     let ud = UserDefaults.standard
     var setalarmlist = [[AlarmSetModel]]()
+    
+    var numberOfRingtones = 2
+    let mediaPicker = MPMediaPickerController(mediaTypes: .music)
+    var mediaItem: MPMediaItem?
+    var mediaLabel: String!
+    var mediaID: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(mode)
@@ -34,6 +42,9 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
             let list = NSKeyedUnarchiver.unarchiveObject(with: data) as? [[AlarmSetModel]]
             self.setalarmlist = list!
         }
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,16 +126,18 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
  
     func numberOfSections(in tableView: UITableView) -> Int {
         if mode == "추가"{
-            return 1
-        } else {
             return 2
+        } else {
+            return 3
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return 2
+        } else if section == 1{
+            return 2
         } else {
-            return 1
+            return numberOfRingtones
         }
     }
     
@@ -149,33 +162,71 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
         }
         return cell
     }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//    }
+
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0{
+            switch indexPath.row{
+            case 0:
+                print("사운드 선택")
+//                self.performSegue(withIdentifier: "MediaSoundSegue", sender: self)
+                //Media
+                mediaPicker.delegate = self
+                mediaPicker.prompt = "음악 선택!"
+                mediaPicker.allowsPickingMultipleItems = false
+                self.present(mediaPicker, animated: true, completion: nil)
+            case 1:
+                print("알람 이름선택")
+            default:
+                let cell = tableView.cellForRow(at: indexPath)
+                cell?.accessoryType = .checkmark
+                mediaLabel = cell?.textLabel?.text!
+                cell?.setSelected(true, animated: true)
+                cell?.setSelected(false, animated: true)
+                let cells = tableView.visibleCells
+                for c in cells{
+                    let section = tableView.indexPath(for: c)?.section
+                    if(section == indexPath.section && c != cell){
+                        c.accessoryType = .none
+                    }
+                }
+            }
+        }
+    }
 
 
     
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+  /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-    // Pass the selected object to the new view controller.
-//         let vc = storyboard?.instantiateViewController(withIdentifier: "Alarms") as! AlarmsTableViewController
-//        vc.start = self.start
-//
-//        let vc2 = storyboard?.instantiateViewController(withIdentifier: "SetAlarms") as! SetAlarmTableViewController
-//        vc2.start = self.start
-//
-        
-//        let alarmController = segue.destination as! AlarmsTableViewController
-//        if segue.identifier == "AlarmAddedSegue"{
-//            alarmController.start = self.start
-//            navigationController?.popViewController(animated: true)
-//        }
-//
-        
+        let dest = segue.destination
+        switch segue.identifier {
+        case Id.mediaSoundIdentifier:
+        guard let vc = dest as? MediaTableViewController else {return}
+            
+        default:
+            break
+        }
     }
-    */
+ */
+}
+
+extension AddEditAlarmViewController: MPMediaPickerControllerDelegate{
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+//        for mediaItem in mediaItemCollection.items{
+//            print("Add \(mediaItem)")
+//        }
+        if !mediaItemCollection.items.isEmpty{
+            let aMediaItem = mediaItemCollection.items[0]
+            
+            self.mediaItem = aMediaItem
+            mediaID = (self.mediaItem?.value(forProperty: MPMediaItemPropertyPersistentID)) as! String 
+        }
+        print("ADD \(mediaID)")
+    }
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        print("cancel")
+        self.dismiss(animated: true, completion: nil)
+    }
 }

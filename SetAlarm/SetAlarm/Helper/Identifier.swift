@@ -17,4 +17,6 @@ struct Id{
     
     static let addAlarmIdentifier = "AddAalrmSegue"
     static let editAlarmIdentifier = "EditAlarmSegue"
+    
+    static let mediaSoundIdentifier = "MediaSoundSegue"
 }

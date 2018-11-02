@@ -12,6 +12,7 @@
 		476C01F02161C76F00A079ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 476C01EF2161C76F00A079ED /* Assets.xcassets */; };
 		476C01F32161C76F00A079ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 476C01F12161C76F00A079ED /* LaunchScreen.storyboard */; };
 		47D68AE4217EF34200F59311 /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D68AE3217EF34200F59311 /* bell.mp3 */; };
+		47D68AEA2183497400F59311 /* MediaTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D68AE92183497400F59311 /* MediaTableViewController.swift */; };
 		47FA9C5F21663E470056B8CE /* SetAlarmTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C5E21663E470056B8CE /* SetAlarmTableViewController.swift */; };
 		47FA9C612166419B0056B8CE /* AlarmsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C602166419B0056B8CE /* AlarmsTableViewController.swift */; };
 		47FA9C63216643490056B8CE /* AlarmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C62216643490056B8CE /* AlarmModel.swift */; };
@@ -31,6 +32,7 @@
 		476C01F22161C76F00A079ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		476C01F42161C76F00A079ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47D68AE3217EF34200F59311 /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
+		47D68AE92183497400F59311 /* MediaTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTableViewController.swift; sourceTree = "<group>"; };
 		47FA9C5E21663E470056B8CE /* SetAlarmTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmTableViewController.swift; sourceTree = "<group>"; };
 		47FA9C602166419B0056B8CE /* AlarmsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsTableViewController.swift; sourceTree = "<group>"; };
 		47FA9C62216643490056B8CE /* AlarmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmModel.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				47FA9CE62168F49D0056B8CE /* AddSetAlarmViewController.swift */,
 				47FA9C602166419B0056B8CE /* AlarmsTableViewController.swift */,
 				47FA9CEC216A03B10056B8CE /* AddEditAlarmViewController.swift */,
+				47D68AE92183497400F59311 /* MediaTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				47FA9C65216643AB0056B8CE /* AlarmCell.swift in Sources */,
 				47FA9C5F21663E470056B8CE /* SetAlarmTableViewController.swift in Sources */,
 				47FA9CF3216A68910056B8CE /* AddEditCell.swift in Sources */,
+				47D68AEA2183497400F59311 /* MediaTableViewController.swift in Sources */,
 				47FA9CE72168F49D0056B8CE /* AddSetAlarmViewController.swift in Sources */,
 				47FA9CED216A03B10056B8CE /* AddEditAlarmViewController.swift in Sources */,
 				47FA9CF1216A27670056B8CE /* SegueInfo.swift in Sources */,
