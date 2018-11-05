@@ -7,40 +7,132 @@
 //
 
 import UIKit
+import MediaPlayer
+import AVFoundation
 
 
 class MediaTableViewController: UITableViewController {
 
+    let numberOfRingtones = 2
+    let mediaPicker = MPMediaPickerController(mediaTypes: .music)
+    var mediaItem: MPMediaItem?
+    var mediaLabel:[String]? = ["기본음"]
+//    var mediaID: String!
+    var mediaURL: [URL]? = [Bundle.main.url(forResource: "bell", withExtension: "mp3")!]
+    
+    var audioPlayer: AVAudioPlayer!
+    var audioFile: URL!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        audioFile = mediaURL?[0]
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor =  UIColor.gray
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 10)
+        header.textLabel?.frame = header.frame
+        header.textLabel?.textAlignment = .left
     }
     
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        if section == 0{
+            return 1
+        } else{
+            if mediaLabel == nil {
+                return 1
+            } else {
+                return (mediaLabel?.count)!
+            }
+        }
+        
     }
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0{
+            return "알람음 선택"
+        } else{
+            return "노래"
+        }
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MediaCell", for: indexPath)
+   
+        if indexPath.section == 0{
+            if indexPath.row == 0{
+                cell.textLabel!.text = "노래 선택"
+                cell.accessoryType = .disclosureIndicator
+            }
+        } else {
+            cell.textLabel?.text = mediaLabel?[indexPath.row]
+            if (mediaURL?.count)! != 1{
+                if (mediaURL?.count)! == indexPath.row+1{
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .none
+                }
+            }
+        }
         
-        // Configure the cell...
-
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//    }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let mediaPicker = MPMediaPickerController(mediaTypes: .anyAudio)
+        
+        
+        mediaPicker.delegate = self
+        mediaPicker.prompt = "노래 선택!"
+        mediaPicker.allowsPickingMultipleItems = false
+        
+        
+        if indexPath.section == 0{
+            if indexPath.row == 0{
+                self.present(mediaPicker, animated: true, completion: nil)
+            }
+        } else if indexPath.section == 1{
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.accessoryType = .checkmark
+            cell?.setSelected(true, animated: true)
+            cell?.setSelected(false, animated: true)
+            
+            do{
+                audioFile = mediaURL?[indexPath.row]
+                audioPlayer = try AVAudioPlayer(contentsOf: audioFile)
+            } catch let error as NSError{
+                print("Error-initPlay: \(error)")
+            }
+            
+            audioPlayer.delegate = self
+            audioPlayer.prepareToPlay()
+            audioPlayer.volume = 2.0
+            
+            audioPlayer.play()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+       
+        audioPlayer.stop()
+        cell?.accessoryType = .none
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -88,4 +180,47 @@ class MediaTableViewController: UITableViewController {
 
 }
 
+extension MediaTableViewController: MPMediaPickerControllerDelegate{
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+//
+//        if !mediaItemCollection.items.isEmpty{
+//            let aMediaItem = mediaItemCollection.items[0]
+//
+//            self.mediaItem = aMediaItem
+//            mediaID = self.mediaItem?.value(forProperty: MPMediaItemPropertyPersistentID) as! String
+//
+//
+//        }
+        let mc = mediaItemCollection.items[0]
+        print("타이틀: \(mc.value(forProperty: MPMediaItemPropertyTitle) as! String)")
+        mediaLabel?.append(mc.value(forProperty: MPMediaItemPropertyTitle) as! String)
+        mediaURL?.append(mc.value(forProperty: MPMediaItemPropertyAssetURL) as! URL)
+        audioFile = mc.value(forProperty: MPMediaItemPropertyAssetURL) as! URL
 
+        do{
+            audioPlayer = try AVAudioPlayer(contentsOf: audioFile)
+        } catch let error as NSError{
+            print("Error-initPlay: \(error)")
+        }
+
+        audioPlayer.delegate = self
+        audioPlayer.prepareToPlay()
+        audioPlayer.volume = 2.0
+
+        audioPlayer.play()
+        
+        tableView.reloadData()
+        
+        dismiss(animated: true, completion: nil)
+     
+    }
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MediaTableViewController: AVAudioPlayerDelegate{
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        player.stop()
+    }
+}

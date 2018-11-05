@@ -142,10 +142,10 @@
             </objects>
             <point key="canvasLocation" x="2791.1999999999998" y="760.56971514242889"/>
         </scene>
-        <!--MediaViewController-->
+        <!--사운드-->
         <scene sceneID="UWD-ih-HyY">
             <objects>
-                <tableViewController storyboardIdentifier="MediaViewController" title="MediaViewController" id="tMq-qw-nzk" customClass="MediaTableViewController" customModule="SetAlarm" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MediaViewController" title="사운드" id="tMq-qw-nzk" customClass="MediaTableViewController" customModule="SetAlarm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uZP-HN-QeB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -176,6 +176,7 @@
                     </tableView>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d4p-La-oHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="weN-7S-lfl" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2041" y="761"/>
         </scene>
@@ -200,7 +201,6 @@
         <!--Alarms-->
         <scene sceneID="3MH-hZ-qyS">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="io1-Rw-hSp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="Alarms" title="Alarms" id="KXC-GT-bVw" customClass="AlarmsTableViewController" customModule="SetAlarm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="DWw-SM-5XV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -274,6 +274,7 @@
                         <segue destination="azq-gQ-Qtg" kind="show" identifier="AddAlarmSegue" id="DbG-bB-I0x"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="io1-Rw-hSp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1273" y="-69"/>
         </scene>
@@ -290,12 +291,28 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="addEditCell" id="JlX-BH-mYx" customClass="AddEditCell" customModule="SetAlarm" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="addEditCell" textLabel="Fx8-wd-8cu" detailTextLabel="T22-pL-fLa" style="IBUITableViewCellStyleValue1" id="JlX-BH-mYx" customClass="AddEditCell" customModule="SetAlarm" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JlX-BH-mYx" id="6qC-xM-CZh">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fx8-wd-8cu">
+                                                    <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T22-pL-fLa">
+                                                    <rect key="frame" x="316" y="12" width="44" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -334,6 +351,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="tMq-qw-nzk" kind="show" identifier="MediaSoundSegue" id="Ffy-cq-6S0"/>
+                        <segue destination="weN-7S-lfl" kind="unwind" unwindAction="unwindFromMediaView:" id="Hib-jN-88V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tRq-gt-3PR" userLabel="First Responder" sceneMemberID="firstResponder"/>
