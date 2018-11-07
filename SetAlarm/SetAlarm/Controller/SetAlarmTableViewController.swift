@@ -44,7 +44,11 @@ class SetAlarmTableViewController: UITableViewController{
         }
         
         print("SetAalrm 갯수: \(self.setalarmlist.count)")
+        //주의사항 코드 추가해야됨 맨처음 앱 실행하면 저게 없거덩
+//        if let mediaURL = ud.string(forKey: "mediaURL"){
+//            print("값이 오는가? \(mediaURL)")
         
+//        }
         self.tableView.reloadData()
     }
     
@@ -123,6 +127,7 @@ class SetAlarmTableViewController: UITableViewController{
         let setalarm = self.setalarmlist[index][0]
         localContent.title = setalarm.title!
         localContent.sound = UNNotificationSound(named: "bell.mp3")
+        
  
         //발송 조건 정의
         let alarmcount = self.setalarmlist[index][0].setAlarms?.count as! Int

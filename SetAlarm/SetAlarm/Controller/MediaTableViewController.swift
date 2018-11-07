@@ -17,11 +17,15 @@ class MediaTableViewController: UITableViewController {
     let mediaPicker = MPMediaPickerController(mediaTypes: .music)
     var mediaItem: MPMediaItem?
     var mediaLabel:[String]? = ["기본음"]
-//    var mediaID: String!
+    
+    var mediaID: String! //선택한 노래 저장하는 용도
+    
     var mediaURL: [URL]? = [Bundle.main.url(forResource: "bell", withExtension: "mp3")!]
     
     var audioPlayer: AVAudioPlayer!
     var audioFile: URL!
+    
+    let ud = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +34,17 @@ class MediaTableViewController: UITableViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+       tableView.reloadData()
+        if let data = ud.data(forKey: "mediaURL"){
+            let decoded = NSKeyedUnarchiver.unarchiveObject(with: data) as? [URL]
+            self.mediaURL = decoded!
+            print("mediaURL: \(self.mediaURL)")
+        }
+        if let mediaLabel = ud.array(forKey: "mediaLabel"){
+            self.mediaLabel = mediaLabel as! [String]
+        }
+    }
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.textColor =  UIColor.gray
@@ -69,7 +84,7 @@ class MediaTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MediaCell", for: indexPath)
-   
+     
         if indexPath.section == 0{
             if indexPath.row == 0{
                 cell.textLabel!.text = "노래 선택"
@@ -116,6 +131,8 @@ class MediaTableViewController: UITableViewController {
             } catch let error as NSError{
                 print("Error-initPlay: \(error)")
             }
+            
+            self.mediaID = mediaLabel?[indexPath.row]
             
             audioPlayer.delegate = self
             audioPlayer.prepareToPlay()
@@ -202,7 +219,7 @@ extension MediaTableViewController: MPMediaPickerControllerDelegate{
         } catch let error as NSError{
             print("Error-initPlay: \(error)")
         }
-
+       
         audioPlayer.delegate = self
         audioPlayer.prepareToPlay()
         audioPlayer.volume = 2.0
@@ -211,8 +228,17 @@ extension MediaTableViewController: MPMediaPickerControllerDelegate{
         
         tableView.reloadData()
         
+        ud.set(self.mediaLabel, forKey: "mediaLabel")
+        let encoded = NSKeyedArchiver.archivedData(withRootObject: mediaURL)
+        print("\(encoded)")
+        ud.set(encoded, forKey: "mediaURL")
+        
+        //mediaID도 저장
+        mediaID = mc.value(forProperty: MPMediaItemPropertyTitle) as! String
+        ud.set(mediaID, forKey: "mediaID")
+        
         dismiss(animated: true, completion: nil)
-     
+      
     }
     func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
         self.dismiss(animated: true, completion: nil)

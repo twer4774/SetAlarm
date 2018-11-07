@@ -24,8 +24,11 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
     let ud = UserDefaults.standard
     var setalarmlist = [[AlarmSetModel]]()
     
+    var mediaID: String = "노래선택" //선택한 노래 저장하는 용도
+    
 //    let segueInfo: SegueInfo!
     
+    @IBOutlet var optionTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         print(mode)
@@ -38,11 +41,17 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
             let list = NSKeyedUnarchiver.unarchiveObject(with: data) as? [[AlarmSetModel]]
             self.setalarmlist = list!
         }
+        
   
     }
     
     override func viewWillAppear(_ animated: Bool) {
- 
+        if let mediaID = ud.string(forKey: "mediaID"){
+            self.mediaID = mediaID
+            print("\(mediaID)")
+           
+        }
+        optionTableView.reloadData()
     }
     
     @IBAction func datePicker(_ sender: UIDatePicker) {
@@ -136,7 +145,8 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
             switch indexPath.row{
             case 0:
                 cell.textLabel?.text = "사운드"
-//                cell.detailTextLabel?.text = segueInfo.mediaLabel
+                cell.detailTextLabel?.text = self.mediaID
+                
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 
@@ -213,6 +223,9 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
         let src = segue.source as! MediaTableViewController
 //        segueInfo.mediaLabel = src.mediaLabel
 //        segueInfo.mediaID = src.mediaID
+        
+//        self.mediaID = src.mediaID
+        
         
     }
  
