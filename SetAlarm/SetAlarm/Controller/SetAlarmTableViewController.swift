@@ -20,6 +20,7 @@ class SetAlarmTableViewController: UITableViewController{
     
     var setalarmlist = [[AlarmSetModel]]()
     
+    var selectMusic: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,10 +46,10 @@ class SetAlarmTableViewController: UITableViewController{
         
         print("SetAalrm 갯수: \(self.setalarmlist.count)")
         //주의사항 코드 추가해야됨 맨처음 앱 실행하면 저게 없거덩
-//        if let mediaURL = ud.string(forKey: "mediaURL"){
-//            print("값이 오는가? \(mediaURL)")
-        
-//        }
+        if let selectMusic = ud.url(forKey: "selectMusic"){
+            self.selectMusic = selectMusic
+            print("selectMusic: \(selectMusic)")
+        }
         self.tableView.reloadData()
     }
     
@@ -126,8 +127,14 @@ class SetAlarmTableViewController: UITableViewController{
         let localContent = UNMutableNotificationContent()
         let setalarm = self.setalarmlist[index][0]
         localContent.title = setalarm.title!
-        localContent.sound = UNNotificationSound(named: "bell.mp3")
+//        localContent.sound = UNNotificationSound(named: "bell.mp3")
+
         
+      
+        if let selectMusic = self.selectMusic{
+            let sound = NSURL(fileURLWithPath: "\(selectMusic)")
+            print("sound: \(sound)")
+        }
  
         //발송 조건 정의
         let alarmcount = self.setalarmlist[index][0].setAlarms?.count as! Int
@@ -230,6 +237,7 @@ class SetAlarmTableViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            offLocoalNotification(index: indexPath.row)
             self.setalarmlist.remove(at: indexPath.row)
             let encoded = NSKeyedArchiver.archivedData(withRootObject: self.setalarmlist)
             

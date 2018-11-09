@@ -11,7 +11,20 @@
 		476C01EE2161C76E00A079ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 476C01EC2161C76E00A079ED /* Main.storyboard */; };
 		476C01F02161C76F00A079ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 476C01EF2161C76F00A079ED /* Assets.xcassets */; };
 		476C01F32161C76F00A079ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 476C01F12161C76F00A079ED /* LaunchScreen.storyboard */; };
-		47D68AE4217EF34200F59311 /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D68AE3217EF34200F59311 /* bell.mp3 */; };
+		47B708082195CCB100431A13 /* Bicycle_Pedaling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B707FA2195CCB100431A13 /* Bicycle_Pedaling.mp3 */; };
+		47B708092195CCB100431A13 /* Siren_Whistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B707FB2195CCB100431A13 /* Siren_Whistle.mp3 */; };
+		47B7080A2195CCB100431A13 /* Hitting_a_Woodblock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B707FC2195CCB100431A13 /* Hitting_a_Woodblock.mp3 */; };
+		47B7080B2195CCB100431A13 /* Mechanical_Clock_Ring.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B707FD2195CCB100431A13 /* Mechanical_Clock_Ring.mp3 */; };
+		47B7080C2195CCB100431A13 /* Metal_Strike.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B707FE2195CCB100431A13 /* Metal_Strike.mp3 */; };
+		47B7080D2195CCB100431A13 /* Digital_Watch_Alarm_Long.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B707FF2195CCB100431A13 /* Digital_Watch_Alarm_Long.mp3 */; };
+		47B7080E2195CCB100431A13 /* Clown_Horn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708002195CCB100431A13 /* Clown_Horn.mp3 */; };
+		47B7080F2195CCB100431A13 /* Cowbell_Ringing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708012195CCB100431A13 /* Cowbell_Ringing.mp3 */; };
+		47B708102195CCB100431A13 /* Falling_whistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708022195CCB100431A13 /* Falling_whistle.mp3 */; };
+		47B708112195CCB100431A13 /* Jingle_Bells.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708032195CCB100431A13 /* Jingle_Bells.mp3 */; };
+		47B708122195CCB100431A13 /* Dinner_Bell_Triangle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708042195CCB100431A13 /* Dinner_Bell_Triangle.mp3 */; };
+		47B708142195CCB100431A13 /* Spaceship_Alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708062195CCB100431A13 /* Spaceship_Alarm.mp3 */; };
+		47B708152195CCB100431A13 /* Crash_Layer_Drumset.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708072195CCB100431A13 /* Crash_Layer_Drumset.mp3 */; };
+		47B708172195D08700431A13 /* Bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47B708162195D08700431A13 /* Bell.mp3 */; };
 		47D68AEA2183497400F59311 /* MediaTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D68AE92183497400F59311 /* MediaTableViewController.swift */; };
 		47FA9C5F21663E470056B8CE /* SetAlarmTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C5E21663E470056B8CE /* SetAlarmTableViewController.swift */; };
 		47FA9C612166419B0056B8CE /* AlarmsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA9C602166419B0056B8CE /* AlarmsTableViewController.swift */; };
@@ -31,7 +44,20 @@
 		476C01EF2161C76F00A079ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		476C01F22161C76F00A079ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		476C01F42161C76F00A079ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		47D68AE3217EF34200F59311 /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
+		47B707FA2195CCB100431A13 /* Bicycle_Pedaling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Bicycle_Pedaling.mp3; sourceTree = "<group>"; };
+		47B707FB2195CCB100431A13 /* Siren_Whistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Siren_Whistle.mp3; sourceTree = "<group>"; };
+		47B707FC2195CCB100431A13 /* Hitting_a_Woodblock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Hitting_a_Woodblock.mp3; sourceTree = "<group>"; };
+		47B707FD2195CCB100431A13 /* Mechanical_Clock_Ring.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Mechanical_Clock_Ring.mp3; sourceTree = "<group>"; };
+		47B707FE2195CCB100431A13 /* Metal_Strike.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Metal_Strike.mp3; sourceTree = "<group>"; };
+		47B707FF2195CCB100431A13 /* Digital_Watch_Alarm_Long.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Digital_Watch_Alarm_Long.mp3; sourceTree = "<group>"; };
+		47B708002195CCB100431A13 /* Clown_Horn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Clown_Horn.mp3; sourceTree = "<group>"; };
+		47B708012195CCB100431A13 /* Cowbell_Ringing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Cowbell_Ringing.mp3; sourceTree = "<group>"; };
+		47B708022195CCB100431A13 /* Falling_whistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Falling_whistle.mp3; sourceTree = "<group>"; };
+		47B708032195CCB100431A13 /* Jingle_Bells.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Jingle_Bells.mp3; sourceTree = "<group>"; };
+		47B708042195CCB100431A13 /* Dinner_Bell_Triangle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Dinner_Bell_Triangle.mp3; sourceTree = "<group>"; };
+		47B708062195CCB100431A13 /* Spaceship_Alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Spaceship_Alarm.mp3; sourceTree = "<group>"; };
+		47B708072195CCB100431A13 /* Crash_Layer_Drumset.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Crash_Layer_Drumset.mp3; sourceTree = "<group>"; };
+		47B708162195D08700431A13 /* Bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Bell.mp3; sourceTree = "<group>"; };
 		47D68AE92183497400F59311 /* MediaTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTableViewController.swift; sourceTree = "<group>"; };
 		47FA9C5E21663E470056B8CE /* SetAlarmTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmTableViewController.swift; sourceTree = "<group>"; };
 		47FA9C602166419B0056B8CE /* AlarmsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsTableViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +100,7 @@
 		476C01E72161C76E00A079ED /* SetAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				47B707F92195CCB100431A13 /* Bell */,
 				47FA9CE82168FB3C0056B8CE /* Helper */,
 				47FA9C6621664B1F0056B8CE /* Protocol */,
 				47FA9C5D21663E240056B8CE /* Controller */,
@@ -82,10 +109,30 @@
 				476C01EC2161C76E00A079ED /* Main.storyboard */,
 				476C01EF2161C76F00A079ED /* Assets.xcassets */,
 				476C01F12161C76F00A079ED /* LaunchScreen.storyboard */,
-				47D68AE3217EF34200F59311 /* bell.mp3 */,
 				476C01F42161C76F00A079ED /* Info.plist */,
 			);
 			path = SetAlarm;
+			sourceTree = "<group>";
+		};
+		47B707F92195CCB100431A13 /* Bell */ = {
+			isa = PBXGroup;
+			children = (
+				47B707FA2195CCB100431A13 /* Bicycle_Pedaling.mp3 */,
+				47B707FB2195CCB100431A13 /* Siren_Whistle.mp3 */,
+				47B707FC2195CCB100431A13 /* Hitting_a_Woodblock.mp3 */,
+				47B707FD2195CCB100431A13 /* Mechanical_Clock_Ring.mp3 */,
+				47B707FE2195CCB100431A13 /* Metal_Strike.mp3 */,
+				47B707FF2195CCB100431A13 /* Digital_Watch_Alarm_Long.mp3 */,
+				47B708002195CCB100431A13 /* Clown_Horn.mp3 */,
+				47B708012195CCB100431A13 /* Cowbell_Ringing.mp3 */,
+				47B708022195CCB100431A13 /* Falling_whistle.mp3 */,
+				47B708162195D08700431A13 /* Bell.mp3 */,
+				47B708032195CCB100431A13 /* Jingle_Bells.mp3 */,
+				47B708042195CCB100431A13 /* Dinner_Bell_Triangle.mp3 */,
+				47B708062195CCB100431A13 /* Spaceship_Alarm.mp3 */,
+				47B708072195CCB100431A13 /* Crash_Layer_Drumset.mp3 */,
+			);
+			path = Bell;
 			sourceTree = "<group>";
 		};
 		47FA9C5C21663E150056B8CE /* Model */ = {
@@ -185,9 +232,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				476C01F32161C76F00A079ED /* LaunchScreen.storyboard in Resources */,
-				47D68AE4217EF34200F59311 /* bell.mp3 in Resources */,
+				47B7080E2195CCB100431A13 /* Clown_Horn.mp3 in Resources */,
+				47B708172195D08700431A13 /* Bell.mp3 in Resources */,
+				47B708142195CCB100431A13 /* Spaceship_Alarm.mp3 in Resources */,
 				476C01F02161C76F00A079ED /* Assets.xcassets in Resources */,
+				47B708112195CCB100431A13 /* Jingle_Bells.mp3 in Resources */,
+				47B708122195CCB100431A13 /* Dinner_Bell_Triangle.mp3 in Resources */,
+				47B7080D2195CCB100431A13 /* Digital_Watch_Alarm_Long.mp3 in Resources */,
+				47B708092195CCB100431A13 /* Siren_Whistle.mp3 in Resources */,
+				47B708102195CCB100431A13 /* Falling_whistle.mp3 in Resources */,
 				476C01EE2161C76E00A079ED /* Main.storyboard in Resources */,
+				47B7080C2195CCB100431A13 /* Metal_Strike.mp3 in Resources */,
+				47B708152195CCB100431A13 /* Crash_Layer_Drumset.mp3 in Resources */,
+				47B7080A2195CCB100431A13 /* Hitting_a_Woodblock.mp3 in Resources */,
+				47B7080B2195CCB100431A13 /* Mechanical_Clock_Ring.mp3 in Resources */,
+				47B7080F2195CCB100431A13 /* Cowbell_Ringing.mp3 in Resources */,
+				47B708082195CCB100431A13 /* Bicycle_Pedaling.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

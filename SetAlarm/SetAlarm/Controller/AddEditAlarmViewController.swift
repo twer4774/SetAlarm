@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MediaPlayer
 
 class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -125,80 +124,49 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
  */
  
     func numberOfSections(in tableView: UITableView) -> Int {
-        if mode == "추가"{
-            return 1
-        } else {
-            return 2
-        }
+        return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
-            return 2
-        } else {
-            return 3
-        }
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "addEditCell") as! AddEditCell
-        if indexPath.section == 0{
-            switch indexPath.row{
-            case 0:
-                cell.textLabel?.text = "사운드"
-                cell.detailTextLabel?.text = self.mediaID
-                
-                
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                
-            case 1:
-                cell.textLabel?.text = "알람이름"
-                cell.accessoryType = .disclosureIndicator
-            default:
-                break
-            }
-        }else if indexPath.section == 1{
-            cell.textLabel?.text = "삭제"
-            cell.textLabel?.textAlignment = .center
-            cell.textLabel?.textColor = .red
+        switch indexPath.row{
+        case 0:
+            cell.textLabel?.text = "사운드"
+            cell.detailTextLabel?.text = self.mediaID
+            
+            
+            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+            
+        case 1:
+            cell.textLabel?.text = "알람이름"
+            cell.accessoryType = .disclosureIndicator
+        default:
+            break
+        
         }
         return cell
-    
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        if indexPath.section == 0{
-            switch indexPath.row{
-            case 0:
-                print("사운드 선택")
-                self.performSegue(withIdentifier: "MediaSoundSegue", sender: self)
-                cell?.setSelected(true, animated: false)
-                cell?.setSelected(false, animated: false)
-            case 1:
-                print("알람 이름선택")
-                cell?.setSelected(true, animated: false)
-                cell?.setSelected(false, animated: false)
-            default:
-                break
-//                let cell = tableView.cellForRow(at: indexPath)
-//                cell?.accessoryType = .checkmark
-//                mediaLabel = cell?.textLabel?.text!
-//                cell?.setSelected(true, animated: true)
-//                cell?.setSelected(false, animated: true)
-//                let cells = tableView.visibleCells
-//                for c in cells{
-//                    let section = tableView.indexPath(for: c)?.section
-//                    if(section == indexPath.section && c != cell){
-//                        c.accessoryType = .none
-//                    }
-//                }
-            }
-            //삭제 액션 고민  - 할까말까
-//            esle if indexPath.section == 1{
-//
-//            }
+        switch indexPath.row{
+        case 0:
+            print("사운드 선택")
+            self.performSegue(withIdentifier: "MediaSoundSegue", sender: self)
+            cell?.setSelected(true, animated: false)
+            cell?.setSelected(false, animated: false)
+        case 1:
+            print("알람 이름선택")
+            cell?.setSelected(true, animated: false)
+            cell?.setSelected(false, animated: false)
+        default:
+            break
         }
-    }
+        
+}
 
 
     
