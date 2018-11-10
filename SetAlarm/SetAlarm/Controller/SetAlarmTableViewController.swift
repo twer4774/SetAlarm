@@ -46,10 +46,11 @@ class SetAlarmTableViewController: UITableViewController{
         
         print("SetAalrm 갯수: \(self.setalarmlist.count)")
         //주의사항 코드 추가해야됨 맨처음 앱 실행하면 저게 없거덩
-        if let selectMusic = ud.url(forKey: "selectMusic"){
-            self.selectMusic = selectMusic
-            print("selectMusic: \(selectMusic)")
-        }
+//        if let selectMusic = ud.url(forKey: "selectMusic"){
+//            self.selectMusic = selectMusic
+//            print("selectMusic: \(selectMusic)")
+//
+//        }
         self.tableView.reloadData()
     }
     
@@ -127,14 +128,15 @@ class SetAlarmTableViewController: UITableViewController{
         let localContent = UNMutableNotificationContent()
         let setalarm = self.setalarmlist[index][0]
         localContent.title = setalarm.title!
-//        localContent.sound = UNNotificationSound(named: "bell.mp3")
-
+        localContent.sound = UNNotificationSound(named: "bell.mp3")
+//        localContent.sound = UNNotificationSound(named: "\(selectMusic)")
+        
         
       
-        if let selectMusic = self.selectMusic{
-            let sound = NSURL(fileURLWithPath: "\(selectMusic)")
-            print("sound: \(sound)")
-        }
+//        if let selectMusic = self.selectMusic{
+//            let sound = NSURL(fileURLWithPath: "\(selectMusic)")
+//            print("sound: \(sound)")
+//        }
  
         //발송 조건 정의
         let alarmcount = self.setalarmlist[index][0].setAlarms?.count as! Int
@@ -147,11 +149,19 @@ class SetAlarmTableViewController: UITableViewController{
                 print("ampm\(strAP)")
 
                 var newDate = DateComponents()
-                if strAP == "오후"{
+                //오전 12시는 00시, 오후 12시는 12시
+                if strAP == "오후" && Int((strTime?[0])!)! != 12{
                     newDate.hour = Int((strTime?[0])!)! + 12
                     print(newDate.hour)
-                } else {
-                    newDate.hour = Int((strTime?[0])!)
+                } else if strAP == "오전" && Int((strTime?[0])!)! == 12{
+//                    newDate.hour = Int((strTime?[0])!)! - 12
+                    newDate.hour = 00
+                    print(newDate.hour)
+                } else if strAP == "오전" && Int((strTime?[0])!)! != 12{
+                    newDate.hour = Int((strTime?[0])!)!
+                    print(newDate.hour)
+                } else if strAP == "오후" && Int((strTime?[0])!)! == 12{
+                    newDate.hour = Int((strTime?[0])!)!
                     print(newDate.hour)
                 }
                 
@@ -160,7 +170,7 @@ class SetAlarmTableViewController: UITableViewController{
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: newDate, repeats: true)
                 localContent.body = "\(self.setalarmlist[index][0].setAlarms?[i].mainTime as! String) 알람"
-                let request = UNNotificationRequest(identifier: "\(self.setalarmlist[index][0].setAlarms?[i].mainTime)", content: localContent, trigger: trigger)
+                let request = UNNotificationRequest(identifier: "\(index)\(strAP)\(self.setalarmlist[index][0].setAlarms?[i].mainTime)", content: localContent, trigger: trigger)
                 
                 //노티피케이션 센터에 추가
                 UNUserNotificationCenter.current().add(request){
@@ -178,8 +188,13 @@ class SetAlarmTableViewController: UITableViewController{
             var identifiers: [String] = []
             for notification:UNNotificationRequest in notificationRequests{
                 for i in 0 ..< alarmcount{
-                    if notification.identifier == "\(self.setalarmlist[index][0].setAlarms?[i].mainTime)"{
+                    if let str = self.setalarmlist[index][0].setAlarms?[i]{
+                        let strTime = str.mainTime?.components(separatedBy: ":")
+                        let strAP = str.ampm
+                        print("ampm\(strAP)")
+                    if notification.identifier == "\(index)\(strAP)\(self.setalarmlist[index][0].setAlarms?[i].mainTime)"{
                         identifiers.append(notification.identifier)
+                        }
                     }
                 }
             }
