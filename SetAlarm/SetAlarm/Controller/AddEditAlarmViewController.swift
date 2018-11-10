@@ -24,7 +24,7 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
     var setalarmlist = [[AlarmSetModel]]()
     
     var mediaID: String = "노래선택" //선택한 노래 저장하는 용도
-    
+    var sound: URL?
 //    let segueInfo: SegueInfo!
     
     @IBOutlet var optionTableView: UITableView!
@@ -41,6 +41,7 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
             self.setalarmlist = list!
         }
         
+        
   
     }
     
@@ -48,7 +49,11 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
         if let mediaID = ud.string(forKey: "mediaID"){
             self.mediaID = mediaID
             print("\(mediaID)")
-           
+        }
+        if let mediaURL = ud.url(forKey: "selectMusic"){
+            self.sound = mediaURL
+        } else {
+            self.sound = Bundle.main.url(forResource: "Bell", withExtension: "mp3")!
         }
         optionTableView.reloadData()
     }
@@ -80,9 +85,9 @@ class AddEditAlarmViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func btnSave(_ sender: UIBarButtonItem) {
         
         //알람 저장
-        var data = AlarmsModel(mainTime: self.timeSelect, ampm: self.ampm)
+        var data = AlarmsModel(mainTime: self.timeSelect, ampm: self.ampm, sound: self.sound)
         self.setalarmlist[setIdx][0].setAlarms?.append(data)
-        
+//        self.setalarmlist[setIdx][1].alarmSound.append(ud.string(forKey: "selectMusic"))
         
 //        self.setalarmlist[setIdx][0].setAlarms?.sorted(by: { (a,b) -> Bool in
 //            if a.ampm == "오후"{

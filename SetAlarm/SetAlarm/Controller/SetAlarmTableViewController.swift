@@ -20,7 +20,8 @@ class SetAlarmTableViewController: UITableViewController{
     
     var setalarmlist = [[AlarmSetModel]]()
     
-    var selectMusic: URL?
+    var selectSound: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,12 +46,20 @@ class SetAlarmTableViewController: UITableViewController{
         }
         
         print("SetAalrm 갯수: \(self.setalarmlist.count)")
+/*
         //주의사항 코드 추가해야됨 맨처음 앱 실행하면 저게 없거덩
-//        if let selectMusic = ud.url(forKey: "selectMusic"){
+        if let selectMusic = ud.url(forKey: "selectMusic"){
 //            self.selectMusic = selectMusic
 //            print("selectMusic: \(selectMusic)")
-//
-//        }
+            let strMusic = "\(selectMusic)"
+            let sepaMusic = strMusic.components(separatedBy: "/")
+            self.selectSound = sepaMusic.last!
+//            let strMusic = selectMusic as! String
+//            let sepa = strMusic.components(separatedBy: "/")
+//            print("제발:\(sepa.last)")
+        }
+*/
+        
         self.tableView.reloadData()
     }
     
@@ -118,18 +127,28 @@ class SetAlarmTableViewController: UITableViewController{
         
         //push 알람 객체 생성
         let center = UNUserNotificationCenter.current()
-        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        if #available(iOS 12.0, *) {
+            let options: UNAuthorizationOptions = [.alert, .sound, .badge, .criticalAlert]
+            center.requestAuthorization(options: options) { (didAllow, error) in
+            }
+        } else {
+            // Fallback on earlier versions
+            let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+            center.requestAuthorization(options: options) { (didAllow, error) in
+            }
+        }
         
         //알람 등록
-        center.requestAuthorization(options: options) { (didAllow, error) in
-            
-        }
+//        center.requestAuthorization(options: options) { (didAllow, error) in
+//
+//        }
         
         let localContent = UNMutableNotificationContent()
         let setalarm = self.setalarmlist[index][0]
         localContent.title = setalarm.title!
-        localContent.sound = UNNotificationSound(named: "bell.mp3")
+//        localContent.sound = UNNotificationSound(named: "Bell.mp3")
 //        localContent.sound = UNNotificationSound(named: "\(selectMusic)")
+//        localContent.sound = UNNotificationSound(named: "\(self.selectSound!)")
         
         
       
@@ -146,6 +165,19 @@ class SetAlarmTableViewController: UITableViewController{
             if let str = self.setalarmlist[index][0].setAlarms?[i]{
                 let strTime = str.mainTime?.components(separatedBy: ":")
                 let strAP = str.ampm
+                
+                let selectSound = "\(str.sound)".components(separatedBy: "/")
+                let strSound = selectSound.last!.trimmingCharacters(in: [")"])
+                print("strSound: \(strSound)")
+//                localContent.sound = UNNotificationSound(named: "\(strSound)")
+                if #available(iOS 12.0, *) {
+                    localContent.sound = UNNotificationSound.criticalSoundNamed("\(strSound)", withAudioVolume: 1.0)
+                    
+                } else {
+                    // Fallback on earlier versions
+                    localContent.sound = UNNotificationSound(named: "\(strSound)")
+
+                }
                 print("ampm\(strAP)")
 
                 var newDate = DateComponents()

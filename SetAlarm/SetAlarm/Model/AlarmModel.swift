@@ -16,7 +16,6 @@ class AlarmSetModel: NSObject, NSCoding{
     var swIs: Bool?
     var setAlarms: [AlarmsModel]?
     
-    
     init(title: String, setIdx: Int, swIs:Bool){
         self.title = title
         self.setIdx = setIdx
@@ -52,32 +51,6 @@ class AlarmSetModel: NSObject, NSCoding{
     
 }
 
-/* 일단 없애
-struct SetAlarmModel{
-    var setIdx: Int? //데이터 식별 값
-    var title: String? //알람이름 구분자 역할도 해보자
-    var swIs: Bool = true //스위치 상태
-//    init(setIdx: Int?, title: String?) {
-//        self.setIdx = setIdx
-//        self.title = title
-//        self.swIs = true
-//    }
-//
-//    //NSCoder
-//    required convenience init(coder decoder: NSCoder){
-//        guard let setIdx = decoder.decodeObject(forKey: "setIdx") as? Int,
-//            let title = decoder.decodeObject(forKey: "title") as? String else{
-//                return nil
-//        }
-//        self.init(setIdx: setIdx, title: title)
-//
-//    func encodeWithCoder(coder: NSCoder){
-//        coder.encode(self.setIdx, forKey: "setIdx")
-//        coder.encode(self.title, forKey: "title")
-//    }
-}
-
-*/
 struct AlarmTableModel{
     var alarms: [[AlarmsModel]] = [[]] //2차원배열로 선언
     
@@ -91,22 +64,25 @@ class AlarmsModel: NSObject, NSCoding{
 
     var mainTime: String?
     var ampm: String?
-//    var swIs: Bool = true
+    var sound: URL?
     
     
-    init (mainTime: String, ampm: String){
+    init (mainTime: String, ampm: String, sound: URL?){
         self.mainTime = mainTime
         self.ampm = ampm
+        self.sound = sound
     }
     //MARK: NSCoding
     required init(coder aDecoder: NSCoder) {
         mainTime = aDecoder.decodeObject(forKey: "mainTime") as? String
         ampm = aDecoder.decodeObject(forKey: "ampm") as? String
+        sound = aDecoder.decodeObject(forKey: "sound") as? URL
     }
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.mainTime, forKey: "mainTime")
         aCoder.encode(self.ampm, forKey: "ampm")
+        aCoder.encode(self.sound, forKey: "sound")
     }
 }
 

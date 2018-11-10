@@ -17,7 +17,10 @@ class MediaTableViewController: UITableViewController {
     
     var mediaID: String! //선택한 노래 저장하는 용도
     
+    
+    //URL을 쓰는 이유는 audiFile에서 오디오 재생을 할때 URL로 접근하기 때문
     var mediaURL: [URL]? = [Bundle.main.url(forResource: "Bell", withExtension: "mp3")!, Bundle.main.url(forResource: "Bicycle_Pedaling", withExtension: "mp3")!, Bundle.main.url(forResource: "Siren_Whistle", withExtension: "mp3")!, Bundle.main.url(forResource: "Hitting_a_Woodblock", withExtension: "mp3")!, Bundle.main.url(forResource: "Mechanical_Clock_Ring", withExtension: "mp3")!, Bundle.main.url(forResource: "Metal_Strike", withExtension: "mp3")!, Bundle.main.url(forResource: "Digital_Watch_Alarm_Long", withExtension: "mp3")!, Bundle.main.url(forResource: "Clown_Horn", withExtension: "mp3")!, Bundle.main.url(forResource: "Cowbell_Ringing", withExtension: "mp3")!, Bundle.main.url(forResource: "Falling_whistle", withExtension: "mp3")!, Bundle.main.url(forResource: "Jingle_Bells", withExtension: "mp3")!, Bundle.main.url(forResource: "Dinner_Bell_Triangle", withExtension: "mp3")!, Bundle.main.url(forResource: "Spaceship_Alarm", withExtension: "mp3")!, Bundle.main.url(forResource: "Crash_Layer_Drumset", withExtension: "mp3")!]
+ 
     
     var audioPlayer: AVAudioPlayer!
     var audioFile: URL!
